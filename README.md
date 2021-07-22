@@ -2,9 +2,9 @@
 
 To run this project
 
-Clone this repository
+1 Clone this repository
 
-### `npm install`
+2 ### `npm install`
 
-### `npm start`
+3 ### `npm start`
 

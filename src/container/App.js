@@ -1,52 +1,49 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import CardList from '../components/CardList/CardList';
 import SearchBox from '../components/SearchBox/SearchBox';
 import Scroll from '../components/Scroll/Scroll';
 
-class App extends Component {
-  constructor() {
-    super()
-    this.state = {
-      humans: [],
-      searchfield: ''
-    }
-  }
+function App() {
+  // constructor() {
+  //   super()
+  //   this.state = {
+  //     humans: [],
+  //     searchfield: ''
+  //   }
+  // }
+  const [humans, setHumans] = useState([])
+  const [searchfield, setSearchfield] = useState('')
+  const [count, setCount] = useState(0)
 
-  componentDidMount() {
+  useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
-      .then( response => {
-        return response.json()
-      })
-      .then( users => {
-        this.setState({ humans: users })
-      })
-    // async function fetchUsers() {
-    //   const response = await fetch('https://jsonplaceholder.typicode.com/users')
-    //   const data = await response.json()
-    //   this.setState({humans: data})
-    // }
+      .then(response => response.json())
+      .then(users => setHumans(users))
+  }, [count]) 
+
+  const onSearchChange = (event) => {
+    setSearchfield(event.target.value)
   }
 
-  onSearchChange = (event) => {
-    this.setState({searchfield: event.target.value })
-  }
-
-  render() {
-    const filtredHumans = this.state.humans.filter(human => {
-      return human.name.toLowerCase().includes(this.state.searchfield.toLowerCase());
-    })
-    return !this.state.humans.length ? 
-      <h1>Loading</h1> :
-      (
-        <div className='tc'>
-          <h1 className='f1'>Humans</h1>
-          <SearchBox searchChange={this.onSearchChange}/>
-          <Scroll>
-            <CardList humans={filtredHumans}/>
-          </Scroll>
-        </div>    
-      );  
-  }
+  const filtredHumans = humans.filter(human => {
+    return human.name.toLowerCase().includes(searchfield.toLowerCase());
+  })
+  console.log(humans, searchfield);
+  return !humans.length ? 
+    <h1>Loading</h1> :
+    (
+      <div className='tc'>
+        <h1 className='f1'>Humans</h1>
+        <div className='flex justify-center flex-wrap'>
+          <button className='f6 link dim br-pill ph3 pv2 mb2 dib white bg-dark-blue ma2' onClick={() => setCount(count + 1)}>Click me!</button>
+          <p className="tc f1-l fw1red">{count}</p>
+        </div>
+        <SearchBox searchChange={onSearchChange}/>
+        <Scroll>
+          <CardList humans={filtredHumans}/>
+        </Scroll>
+      </div>    
+    );
   
 }
 
