@@ -1,6 +1,6 @@
 {
-  "name": "human-friends",
-  "homepage": "https://rom2048.github.io/human-friends",
+  "name": "human-friends-hooks",
+  "homepage": "https://rom2048.github.io/human-friends-hooks",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
